@@ -4,7 +4,6 @@ import 'package:locket_clone/domain/usecase/post_usecase.dart';
 import 'package:locket_clone/data/model/post_model.dart';
 import 'package:locket_clone/presentation/bloc/post/post_state.dart';
 import 'package:locket_clone/presentation/bloc/post/post_event.dart';
-import 'package:locket_clone/di/injection.dart';
 
 part 'post_event.dart';
 part 'post_state.dart';
@@ -28,13 +27,11 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
   Future<void> _getPosts(Emitter<PostState> emit) async {
     try {
-      emit(state.copyWith(status: PostStatus.loading));
-      final posts = await _postUseCase.getPosts();
-      emit(state.copyWith(posts: posts, status: PostStatus.success));
+      emit(state.copyWith(getStatus: PostStatus.loading));
+      final posts = await _postUseCase.getPost();
+      emit(state.copyWith(posts: posts, getStatus: PostStatus.success));
     } catch (e) {
-      emit(
-        state.copyWith(status: PostStatus.failure, errorMessage: e.toString()),
-      );
+      emit(state.copyWith(getStatus: PostStatus.fail));
     }
   }
 
