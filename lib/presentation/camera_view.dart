@@ -1,6 +1,9 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:locket_clone/common/configs/locators.dart';
+import 'package:locket_clone/common/configs/navigation.dart';
+import 'package:locket_clone/common/configs/pages.dart';
 import 'package:locket_clone/common/utils/dimens.dart';
 import 'package:locket_clone/common/utils/spacing_unit.dart';
 import 'package:locket_clone/gen/assets.gen.dart';
@@ -40,7 +43,7 @@ class _CameraViewState extends State<CameraView> {
                         TakePicture(controller: widget.controller),
                         _imageStoryView(''),
                         _imageStoryView(''),
-                      ]),s
+                      ]),
                     ],
                   ),
                 ),
