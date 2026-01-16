@@ -6,10 +6,12 @@ import 'package:go_router/go_router.dart';
 import 'package:locket_clone/common/configs/locators.dart';
 import 'package:locket_clone/common/configs/navigation.dart';
 import 'package:locket_clone/common/configs/pages.dart';
+import 'package:locket_clone/common/utils/image_upload.dart';
 import 'package:locket_clone/common/utils/spacing_unit.dart';
+import 'package:locket_clone/domain/entities/post.dart';
 import 'package:locket_clone/gen/assets.gen.dart';
-import 'package:locket_clone/main.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:locket_clone/presentation/bloc/post/post_bloc.dart';
+import 'package:locket_clone/presentation/bloc/post/post_event.dart';
 
 final postNewsPageRoute = GoRoute(
   path: Pages.postNews,
@@ -108,10 +110,11 @@ class _PostImageState extends State<PostImage> {
               padding: const EdgeInsets.symmetric(horizontal: SpacingUnit.x2),
               itemCount: 10,
               scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) =>
-                  _itemUser(Assets.images.sunny.path),
-              separatorBuilder: (BuildContext context, int index) =>
-                  const SizedBox(width: SpacingUnit.x2),
+              itemBuilder:
+                  (context, index) => _itemUser(Assets.images.sunny.path),
+              separatorBuilder:
+                  (BuildContext context, int index) =>
+                      const SizedBox(width: SpacingUnit.x2),
             ),
           ),
           const Spacer(),
@@ -145,21 +148,18 @@ class _PostImageState extends State<PostImage> {
   }
 
   Future<void> _upImage(String filePath) async {
-    final fileName = filePath.split('/').last;
     try {
-      final timeIsoNow = DateTime.now().toIso8601String();
-      final response = await supabase.storage
-          .from('images_locket')
-          .upload('uploads/$fileName$timeIsoNow', File(filePath));
-      final publicUrl = supabase.storage
-          .from('images_locket')
-          .getPublicUrl('uploads/$fileName$timeIsoNow');
-      final insertResponse = await supabase.from('Image').insert({
-        'url': publicUrl,
-        'created_at': timeIsoNow,
-        'user_id': 'khanhhehehe',
-      });
-      print(insertResponse);
+      final imageUrl = await uploadImageWebToCloud(filePath);
+      getIt<PostBloc>().add(
+        PostEvent.createPost(
+          post: Post(
+            imageUrl: imageUrl,
+            createdAt: DateTime.now(),
+            caption: '',
+            userId: 'khanhnguyen',
+          ),
+        ),
+      );
       getIt<AppNavigation>().pop();
     } catch (e) {
       return;

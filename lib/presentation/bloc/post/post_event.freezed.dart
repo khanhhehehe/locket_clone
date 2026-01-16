@@ -125,7 +125,7 @@ return deletePost(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  getPosts,TResult Function( PostModel post)?  createPost,TResult Function( String id)?  deletePost,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  getPosts,TResult Function( Post post)?  createPost,TResult Function( String id)?  deletePost,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _GetPosts() when getPosts != null:
 return getPosts();case _CreatePost() when createPost != null:
@@ -148,7 +148,7 @@ return deletePost(_that.id);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  getPosts,required TResult Function( PostModel post)  createPost,required TResult Function( String id)  deletePost,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  getPosts,required TResult Function( Post post)  createPost,required TResult Function( String id)  deletePost,}) {final _that = this;
 switch (_that) {
 case _GetPosts():
 return getPosts();case _CreatePost():
@@ -170,7 +170,7 @@ return deletePost(_that.id);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  getPosts,TResult? Function( PostModel post)?  createPost,TResult? Function( String id)?  deletePost,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  getPosts,TResult? Function( Post post)?  createPost,TResult? Function( String id)?  deletePost,}) {final _that = this;
 switch (_that) {
 case _GetPosts() when getPosts != null:
 return getPosts();case _CreatePost() when createPost != null:
@@ -219,10 +219,10 @@ String toString() {
 
 
 class _CreatePost implements PostEvent {
-  const _CreatePost({this.post = const PostModel()});
+  const _CreatePost({this.post = const Post()});
   
 
-@JsonKey() final  PostModel post;
+@JsonKey() final  Post post;
 
 /// Create a copy of PostEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -254,11 +254,11 @@ abstract mixin class _$CreatePostCopyWith<$Res> implements $PostEventCopyWith<$R
   factory _$CreatePostCopyWith(_CreatePost value, $Res Function(_CreatePost) _then) = __$CreatePostCopyWithImpl;
 @useResult
 $Res call({
- PostModel post
+ Post post
 });
 
 
-$PostModelCopyWith<$Res> get post;
+$PostCopyWith<$Res> get post;
 
 }
 /// @nodoc
@@ -274,7 +274,7 @@ class __$CreatePostCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? post = null,}) {
   return _then(_CreatePost(
 post: null == post ? _self.post : post // ignore: cast_nullable_to_non_nullable
-as PostModel,
+as Post,
   ));
 }
 
@@ -282,9 +282,9 @@ as PostModel,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$PostModelCopyWith<$Res> get post {
+$PostCopyWith<$Res> get post {
   
-  return $PostModelCopyWith<$Res>(_self.post, (value) {
+  return $PostCopyWith<$Res>(_self.post, (value) {
     return _then(_self.copyWith(post: value));
   });
 }

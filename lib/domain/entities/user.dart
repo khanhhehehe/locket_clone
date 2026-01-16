@@ -1,19 +1,19 @@
-class User {
-  final String? id;
-  final String? username;
-  final String? email;
-  final String? password;
-  final String? avatarUrl;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  const User({
-    this.id,
-    this.username,
-    this.email,
-    this.password,
-    this.avatarUrl,
-    this.createdAt,
-    this.updatedAt,
-  });
+part 'user.freezed.dart';
+part 'user.g.dart';
+
+@freezed
+abstract class User with _$User {
+  const factory User({
+    String? id,
+    String? username,
+    String? email,
+    String? password,
+    String? avatarUrl,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) = _User;
+
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }

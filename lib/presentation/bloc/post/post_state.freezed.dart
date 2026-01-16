@@ -11,33 +11,30 @@ part of 'post_state.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-
 /// @nodoc
 mixin _$PostState {
 
- List<Post> get posts; PostStatus get getStatus;
+ List<Post>? get posts; PostStatus? get getStatus; PostStatus? get createStatus; PostStatus? get deleteStatus;
 /// Create a copy of PostState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 $PostStateCopyWith<PostState> get copyWith => _$PostStateCopyWithImpl<PostState>(this as PostState, _$identity);
 
-  /// Serializes this PostState to a JSON map.
-  Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostState&&const DeepCollectionEquality().equals(other.posts, posts)&&(identical(other.getStatus, getStatus) || other.getStatus == getStatus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostState&&const DeepCollectionEquality().equals(other.posts, posts)&&(identical(other.getStatus, getStatus) || other.getStatus == getStatus)&&(identical(other.createStatus, createStatus) || other.createStatus == createStatus)&&(identical(other.deleteStatus, deleteStatus) || other.deleteStatus == deleteStatus));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(posts),getStatus);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(posts),getStatus,createStatus,deleteStatus);
 
 @override
 String toString() {
-  return 'PostState(posts: $posts, getStatus: $getStatus)';
+  return 'PostState(posts: $posts, getStatus: $getStatus, createStatus: $createStatus, deleteStatus: $deleteStatus)';
 }
 
 
@@ -48,7 +45,7 @@ abstract mixin class $PostStateCopyWith<$Res>  {
   factory $PostStateCopyWith(PostState value, $Res Function(PostState) _then) = _$PostStateCopyWithImpl;
 @useResult
 $Res call({
- List<Post> posts, PostStatus getStatus
+ List<Post>? posts, PostStatus? getStatus, PostStatus? createStatus, PostStatus? deleteStatus
 });
 
 
@@ -65,11 +62,13 @@ class _$PostStateCopyWithImpl<$Res>
 
 /// Create a copy of PostState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? posts = null,Object? getStatus = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? posts = freezed,Object? getStatus = freezed,Object? createStatus = freezed,Object? deleteStatus = freezed,}) {
   return _then(_self.copyWith(
-posts: null == posts ? _self.posts : posts // ignore: cast_nullable_to_non_nullable
-as List<Post>,getStatus: null == getStatus ? _self.getStatus : getStatus // ignore: cast_nullable_to_non_nullable
-as PostStatus,
+posts: freezed == posts ? _self.posts : posts // ignore: cast_nullable_to_non_nullable
+as List<Post>?,getStatus: freezed == getStatus ? _self.getStatus : getStatus // ignore: cast_nullable_to_non_nullable
+as PostStatus?,createStatus: freezed == createStatus ? _self.createStatus : createStatus // ignore: cast_nullable_to_non_nullable
+as PostStatus?,deleteStatus: freezed == deleteStatus ? _self.deleteStatus : deleteStatus // ignore: cast_nullable_to_non_nullable
+as PostStatus?,
   ));
 }
 
@@ -154,10 +153,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Post> posts,  PostStatus getStatus)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Post>? posts,  PostStatus? getStatus,  PostStatus? createStatus,  PostStatus? deleteStatus)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PostState() when $default != null:
-return $default(_that.posts,_that.getStatus);case _:
+return $default(_that.posts,_that.getStatus,_that.createStatus,_that.deleteStatus);case _:
   return orElse();
 
 }
@@ -175,10 +174,10 @@ return $default(_that.posts,_that.getStatus);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Post> posts,  PostStatus getStatus)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Post>? posts,  PostStatus? getStatus,  PostStatus? createStatus,  PostStatus? deleteStatus)  $default,) {final _that = this;
 switch (_that) {
 case _PostState():
-return $default(_that.posts,_that.getStatus);case _:
+return $default(_that.posts,_that.getStatus,_that.createStatus,_that.deleteStatus);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +194,10 @@ return $default(_that.posts,_that.getStatus);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Post> posts,  PostStatus getStatus)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Post>? posts,  PostStatus? getStatus,  PostStatus? createStatus,  PostStatus? deleteStatus)?  $default,) {final _that = this;
 switch (_that) {
 case _PostState() when $default != null:
-return $default(_that.posts,_that.getStatus);case _:
+return $default(_that.posts,_that.getStatus,_that.createStatus,_that.deleteStatus);case _:
   return null;
 
 }
@@ -207,20 +206,24 @@ return $default(_that.posts,_that.getStatus);case _:
 }
 
 /// @nodoc
-@JsonSerializable()
+
 
 class _PostState implements PostState {
-  const _PostState({final  List<Post> posts = const [], this.getStatus = PostStatus.init}): _posts = posts;
-  factory _PostState.fromJson(Map<String, dynamic> json) => _$PostStateFromJson(json);
+  const _PostState({final  List<Post>? posts = const [], this.getStatus = PostStatus.init, this.createStatus = PostStatus.init, this.deleteStatus = PostStatus.init}): _posts = posts;
+  
 
- final  List<Post> _posts;
-@override@JsonKey() List<Post> get posts {
+ final  List<Post>? _posts;
+@override@JsonKey() List<Post>? get posts {
+  final value = _posts;
+  if (value == null) return null;
   if (_posts is EqualUnmodifiableListView) return _posts;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_posts);
+  return EqualUnmodifiableListView(value);
 }
 
-@override@JsonKey() final  PostStatus getStatus;
+@override@JsonKey() final  PostStatus? getStatus;
+@override@JsonKey() final  PostStatus? createStatus;
+@override@JsonKey() final  PostStatus? deleteStatus;
 
 /// Create a copy of PostState
 /// with the given fields replaced by the non-null parameter values.
@@ -228,23 +231,20 @@ class _PostState implements PostState {
 @pragma('vm:prefer-inline')
 _$PostStateCopyWith<_PostState> get copyWith => __$PostStateCopyWithImpl<_PostState>(this, _$identity);
 
-@override
-Map<String, dynamic> toJson() {
-  return _$PostStateToJson(this, );
-}
+
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostState&&const DeepCollectionEquality().equals(other._posts, _posts)&&(identical(other.getStatus, getStatus) || other.getStatus == getStatus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostState&&const DeepCollectionEquality().equals(other._posts, _posts)&&(identical(other.getStatus, getStatus) || other.getStatus == getStatus)&&(identical(other.createStatus, createStatus) || other.createStatus == createStatus)&&(identical(other.deleteStatus, deleteStatus) || other.deleteStatus == deleteStatus));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_posts),getStatus);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_posts),getStatus,createStatus,deleteStatus);
 
 @override
 String toString() {
-  return 'PostState(posts: $posts, getStatus: $getStatus)';
+  return 'PostState(posts: $posts, getStatus: $getStatus, createStatus: $createStatus, deleteStatus: $deleteStatus)';
 }
 
 
@@ -255,7 +255,7 @@ abstract mixin class _$PostStateCopyWith<$Res> implements $PostStateCopyWith<$Re
   factory _$PostStateCopyWith(_PostState value, $Res Function(_PostState) _then) = __$PostStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<Post> posts, PostStatus getStatus
+ List<Post>? posts, PostStatus? getStatus, PostStatus? createStatus, PostStatus? deleteStatus
 });
 
 
@@ -272,11 +272,13 @@ class __$PostStateCopyWithImpl<$Res>
 
 /// Create a copy of PostState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? posts = null,Object? getStatus = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? posts = freezed,Object? getStatus = freezed,Object? createStatus = freezed,Object? deleteStatus = freezed,}) {
   return _then(_PostState(
-posts: null == posts ? _self._posts : posts // ignore: cast_nullable_to_non_nullable
-as List<Post>,getStatus: null == getStatus ? _self.getStatus : getStatus // ignore: cast_nullable_to_non_nullable
-as PostStatus,
+posts: freezed == posts ? _self._posts : posts // ignore: cast_nullable_to_non_nullable
+as List<Post>?,getStatus: freezed == getStatus ? _self.getStatus : getStatus // ignore: cast_nullable_to_non_nullable
+as PostStatus?,createStatus: freezed == createStatus ? _self.createStatus : createStatus // ignore: cast_nullable_to_non_nullable
+as PostStatus?,deleteStatus: freezed == deleteStatus ? _self.deleteStatus : deleteStatus // ignore: cast_nullable_to_non_nullable
+as PostStatus?,
   ));
 }
 

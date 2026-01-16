@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:locket_clone/data/model/post_model.dart';
+import 'package:locket_clone/domain/entities/post.dart';
 
 part 'post_event.freezed.dart';
 
@@ -7,7 +7,7 @@ part 'post_event.freezed.dart';
 class PostEvent with _$PostEvent {
   const factory PostEvent.getPosts() = _GetPosts;
 
-  const factory PostEvent.createPost({@Default(PostModel()) PostModel post}) =
+  const factory PostEvent.createPost({@Default(Post()) Post post}) =
       _CreatePost;
 
   const factory PostEvent.deletePost({@Default('') String id}) = _DeletePost;

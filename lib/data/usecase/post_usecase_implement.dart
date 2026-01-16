@@ -29,7 +29,18 @@ class PostUseCaseImp extends PostUseCase {
   }
 
   @override
-  Future<void> createPost(PostModel post) async {
-    await _repository.createPost(post);
+  Future<void> createPost(Post post) async {
+    await _repository.createPost(_parseToPostModel(post));
+  }
+
+  PostModel _parseToPostModel(Post post) {
+    return PostModel(
+      id: post.id,
+      userId: post.userId,
+      imageUrl: post.imageUrl,
+      caption: post.caption,
+      createdAt: post.createdAt,
+      expiresAt: post.expiresAt,
+    );
   }
 }
